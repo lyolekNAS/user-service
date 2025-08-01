@@ -1,0 +1,3 @@
+spring:
+    config:
+        import: ${DB_CONF},${APP_CONF}

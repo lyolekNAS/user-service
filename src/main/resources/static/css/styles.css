@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    height: 100vh; /* Повна висота вікна */
+    display: flex;
+    align-items: center;   /* Центрування по вертикалі */
+    justify-content: center; /* Центрування по горизонталі */
+    background-color: #f7f7f7;
+    font-family: Arial, sans-serif;
+}
+.container {
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    width: 300px;
+}

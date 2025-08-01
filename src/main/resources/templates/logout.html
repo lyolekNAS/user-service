@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Spring Security</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Все, йдеш?</h2>
+
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Та піду"/>
+    </form>
+</div>
+</body>
+</html>
