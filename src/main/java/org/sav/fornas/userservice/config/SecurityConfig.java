@@ -138,10 +138,11 @@ public class SecurityConfig {
 			if(authUser.getPrincipal() instanceof CustomUserDetails cud){
 				var claims = context.getClaims();
 				log.debug(">>> adding claims for {}", cud.getUsername());
+				claims.claim("userId", cud.getId());
 				claims.claim("name", cud.getName());
 				claims.claim("surname", cud.getSurname());
 				claims.claim("email", cud.getEmail());
-				claims.claim("roles", cud.getAuthorities().stream()
+						claims.claim("roles", cud.getAuthorities().stream()
 						.map(Object::toString).toList());
 			}
 		};

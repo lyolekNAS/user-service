@@ -24,6 +24,7 @@ import java.util.Map;
 @ToString
 public class CustomUserDetails implements UserDetails, OidcUser {
 
+	private Long id;
 	private String username;
 	private String password;
 	private String name;
@@ -52,6 +53,7 @@ public class CustomUserDetails implements UserDetails, OidcUser {
 		);
 
 		return CustomUserDetails.builder()
+				.id(userEntity.getId())
 				.username(userEntity.getUsername())
 				.password(userEntity.getPassword())
 				.name(userEntity.getName())
