@@ -23,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
@@ -131,19 +132,23 @@ public class SecurityConfig {
 		return context -> {
 			log.debug(">>>customizing token {}", context.getTokenType().getValue());
 
-			if (!context.getTokenType().getValue().equals("id_token"))
-				return;
-			var authUser = context.getPrincipal();
-			log.debug(">>>customizing token for {}", authUser);
-			if(authUser.getPrincipal() instanceof CustomUserDetails cud){
-				var claims = context.getClaims();
-				log.debug(">>> adding claims for {}", cud.getUsername());
-				claims.claim("userId", cud.getId());
-				claims.claim("name", cud.getName());
-				claims.claim("surname", cud.getSurname());
-				claims.claim("email", cud.getEmail());
-						claims.claim("roles", cud.getAuthorities().stream()
-						.map(Object::toString).toList());
+			if (context.getTokenType().getValue().equals("id_token") ||
+					context.getTokenType().equals(OAuth2TokenType.ACCESS_TOKEN)) {
+
+				var authUser = context.getPrincipal();
+				log.debug(">>> customizing token for {}", authUser);
+
+				if (authUser.getPrincipal() instanceof CustomUserDetails cud) {
+					var claims = context.getClaims();
+					log.debug(">>> adding claims for {}", cud.getUsername());
+
+					claims.claim("userId", cud.getId());
+					claims.claim("name", cud.getName());
+					claims.claim("surname", cud.getSurname());
+					claims.claim("email", cud.getEmail());
+					claims.claim("roles", cud.getAuthorities().stream()
+							.map(Object::toString).toList());
+				}
 			}
 		};
 	}
