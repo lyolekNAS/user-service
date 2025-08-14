@@ -11,9 +11,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 public class UserserviceApplication {
 
 	public static void main(String[] args) {
-		log.info("------------------------------------Starting--------------------------------------");
+		log.info("------------------------------------<Starting>--------------------------------------");
 		SpringApplication.run(UserserviceApplication.class, args);
-		log.info("------------------------------------Started--------------------------------------");
+		log.info("------------------------------------<Started>--------------------------------------");
 	}
 
 }
