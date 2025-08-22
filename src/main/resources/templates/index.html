@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Cards</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Вітаю, <span sec:authentication="principal.name"></span> <span sec:authentication="principal.surname"></span> (<span sec:authentication="name"></span>)</h2>
+
+    <div sec:authorize="hasRole('ADMIN')">
+        <div><a href="/admin/sessions">Сесії</a></div>
+        <div><a href="/password/пароль">Паролі</a></div>
+    </div>
+    <div><a href="/me">Про мене</a></div>
+    <div><a href="/profile">Профіль</a></div>
+    <div><a href="/logout">Піти</a></div>
+</div>
+</body>
+</html>

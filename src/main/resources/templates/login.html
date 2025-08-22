@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head th:fragment="head">
-    <title>Spring Security</title>
+    <title>Авторизація</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
 <div class="container">
-    <h2>Хто то йде??</h2>
+    <h2>Хто то йде?</h2>
     <form th:action="@{/login}" method="post">
         <div>
             <input type="text" name="username" placeholder="Ім'я"/>

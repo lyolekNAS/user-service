@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Профіль</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Профіль користувача</h2>
+    <form th:action="@{/profile}" method="post">
+        <div>
+            <label>Username:</label>
+            <span th:text="${cud.username}"></span>
+        </div>
+        <div>
+            <label>Email:</label>
+            <span th:text="${cud.email}"></span>
+        </div>
+        <div>
+            <label for="name">Ім'я:</label>
+            <input type="text" id="name" name="name" th:value="${cud.name}">
+        </div>
+        <div>
+            <label for="surname">Прізвище:</label>
+            <input type="text" id="surname" name="surname" th:value="${cud.surname}">
+        </div>
+        <button type="submit">Зберігти</button>
+    </form>
+</div>
+</body>
+</html>
