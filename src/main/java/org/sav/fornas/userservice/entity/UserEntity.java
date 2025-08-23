@@ -1,20 +1,18 @@
 package org.sav.fornas.userservice.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
 @NoArgsConstructor
-@ToString
+//@Getter
+//@Setter
+//@ToString(exclude = "roles")
+@Data
 public class UserEntity {
 
 	@Id
@@ -40,7 +38,7 @@ public class UserEntity {
 	private String surname;
 
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "user_roles",
 			joinColumns = @JoinColumn(name = "user_id"),

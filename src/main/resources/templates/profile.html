@@ -8,22 +8,24 @@
 <body>
 <div class="container">
     <h2>Профіль користувача</h2>
-    <form th:action="@{/profile}" method="post">
+    <form th:action="@{/profile}" th:object="${user}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{username}"/>
         <div>
             <label>Username:</label>
-            <span th:text="${cud.username}"></span>
+            <span th:text="*{username}"></span>
         </div>
         <div>
             <label>Email:</label>
-            <span th:text="${cud.email}"></span>
+            <span th:text="*{email}"></span>
         </div>
         <div>
             <label for="name">Ім'я:</label>
-            <input type="text" id="name" name="name" th:value="${cud.name}">
+            <input type="text" id="name" name="name" th:value="*{name}">
         </div>
         <div>
             <label for="surname">Прізвище:</label>
-            <input type="text" id="surname" name="surname" th:value="${cud.surname}">
+            <input type="text" id="surname" name="surname" th:value="*{surname}">
         </div>
         <button type="submit">Зберігти</button>
     </form>

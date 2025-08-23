@@ -1,12 +1,14 @@
 package org.sav.fornas.userservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.sav.fornas.dto.users.UserDto;
 import org.sav.fornas.userservice.entity.UserEntity;
 import org.sav.fornas.userservice.mapper.UserMapper;
 import org.sav.fornas.userservice.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -15,13 +17,22 @@ public class UserService {
 	private final UserMapper userMapper;
 
 	public UserDto findByUsername(String userName){
-		return userMapper.toDto(userRepository.findByUsername(userName).orElseThrow());
+		UserEntity userEntity = userRepository.findByUsername(userName).orElseThrow();
+//		log.debug(">>> userEntity:{} {}", userEntity, userEntity.getRoles());
+		log.debug(">>> userEntity:{}", userEntity);
+		UserDto userDto = userMapper.toDto(userEntity);
+		log.debug(">>> userDto:{}", userDto);
+		return userDto;
 	}
 
-	public UserEntity saveUser(UserDto editedUser, String userName){
+	public void saveUser(UserDto editedUser, String userName){
+		log.debug(">>> editedUser:{}", editedUser);
 		UserDto user = findByUsername(userName);
 		user.setName(editedUser.getName());
 		user.setSurname(editedUser.getSurname());
-		return userRepository.findByUsername(userName).orElseThrow();
+		log.debug(">>> user:{}", user);
+		UserEntity userEntity = userMapper.toEntity(user);
+		log.debug(">>> userEntity:{}", userEntity);
+		userRepository.save(userEntity);
 	}
 }

@@ -1,6 +1,7 @@
 package org.sav.fornas.userservice.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-@Getter
-@Setter
+@Data
 public class RoleEntity {
 
 	@Id
@@ -21,7 +21,4 @@ public class RoleEntity {
 	private String roleName;
 
 	private String description;
-
-	@ManyToMany(mappedBy = "roles")
-	private Set<UserEntity> users = new HashSet<>();
 }
