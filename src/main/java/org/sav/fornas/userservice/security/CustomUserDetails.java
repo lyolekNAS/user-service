@@ -1,5 +1,6 @@
 package org.sav.fornas.userservice.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,11 @@ public class CustomUserDetails implements UserDetails, OidcUser {
 	private String surname;
 	private String email;
 	private Collection<? extends GrantedAuthority> authorities;
+
+	@JsonIgnore
+	public String getPassword() {
+		return password;
+	}
 
 
 	@Override

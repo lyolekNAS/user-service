@@ -13,11 +13,17 @@ import org.sav.fornas.userservice.service.CustomOidcUserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
@@ -43,6 +49,24 @@ import java.util.Map;
 @EnableWebSecurity
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60*60*24*14)
 public class SecurityConfig {
+
+	@Bean
+	@Order(0)
+	public SecurityFilterChain publicFilterChain(HttpSecurity http) throws Exception {
+		http
+				.securityMatcher(
+						"/error", "/css/**", "/js/**", "/pub/**"
+				)
+				.authorizeHttpRequests(authorize -> authorize
+						.anyRequest().permitAll()
+				)
+				.sessionManagement(session -> session
+						.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Відключення створення сесії
+				)
+				.csrf(AbstractHttpConfigurer::disable); // Також відключіть CSRF, оскільки сесій немає
+
+		return http.build();
+	}
 
 	@Bean
 	@Order(1)
@@ -77,7 +101,7 @@ public class SecurityConfig {
 			throws Exception {
 		http
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/error", "/css/**", "/js/**", "/.well-known/**", "/pub/**").permitAll()
+						.requestMatchers("/.well-known/**").permitAll()
 						.anyRequest().authenticated()
 				)
 				.formLogin(form -> form
@@ -155,5 +179,20 @@ public class SecurityConfig {
 				}
 			}
 		};
+	}
+
+	@Bean
+	public RedisTemplate<String, Object> redisCustomTemplate(RedisConnectionFactory redisConnectionFactory){
+
+		RedisTemplate<String, Object> template = new RedisTemplate<>();
+		template.setConnectionFactory(redisConnectionFactory);
+
+		template.setKeySerializer(new StringRedisSerializer());
+		template.setHashKeySerializer(new StringRedisSerializer());
+		template.setValueSerializer(new JdkSerializationRedisSerializer());
+		template.setHashValueSerializer(new JdkSerializationRedisSerializer());
+
+		template.afterPropertiesSet();
+		return template;
 	}
 }
