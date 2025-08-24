@@ -1,12 +1,10 @@
 package org.sav.fornas.userservice.controller.rest;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.sav.fornas.userservice.security.CustomUserDetails;
 import org.sav.fornas.userservice.security.annotation.IsAdmin;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,7 +20,8 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class InfoController {
+@RequestMapping("/api")
+public class InfoRestController {
 
 	private final PasswordEncoder passwordEncoder;
 	@Value("${spring.data.redis.host}")

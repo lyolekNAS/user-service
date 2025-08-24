@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Сесії користувачів</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Активні сесії</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Створено</th>
+            <th>Останній доступ</th>
+            <th>ttl</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sess, iterStat : ${sessions}">
+            <td th:text="${iterStat.count}"></td>
+            <td>
+                <a th:href="@{|/api/session/view?sid=${sess.id}|}"
+                   th:text="${sess.username}">
+                </a>
+            </td>
+            <td th:text="${#dates.format(sess.creationTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${#dates.format(sess.lastAccessedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td>
+                <a th:href="@{|/session/delete?sid=${sess.id}|}"  th:text="${sess.ttlFormatted}" style="margin-left: 10px; color: red;"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
