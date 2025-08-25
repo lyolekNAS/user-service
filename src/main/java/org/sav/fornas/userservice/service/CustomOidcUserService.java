@@ -26,9 +26,19 @@ public class CustomOidcUserService implements OAuth2UserService<OidcUserRequest,
 		OidcUser oidcUser = delegate.loadUser(request);
 		String userEmail = oidcUser.getEmail();
 
-		log.debug("email={}", userEmail);
-		UserEntity user = userRepository.findByEmail(userEmail)
-				.orElseThrow(() -> new UsernameNotFoundException("User not found: " + userEmail));
+		log.debug("oidcUser={}", oidcUser);
+		UserEntity user = userRepository.findByEmail(userEmail).orElseGet(
+				() -> {
+					UserEntity newUser = new UserEntity();
+					newUser.setEmail(userEmail);
+					newUser.setUsername(userEmail);
+					newUser.setName(oidcUser.getAttribute("given_name"));
+					newUser.setSurname(oidcUser.getAttribute("family_name"));
+
+					log.debug("newUser={}", newUser);
+					return userRepository.save(newUser);
+				}
+		);
 		log.debug("user={}", user);
 
 		return CustomUserDetails.fromUserEntity(user);
