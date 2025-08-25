@@ -6,6 +6,7 @@ import org.sav.fornas.dto.users.UserDto;
 import org.sav.fornas.userservice.entity.UserEntity;
 import org.sav.fornas.userservice.mapper.UserMapper;
 import org.sav.fornas.userservice.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -15,6 +16,7 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final UserMapper userMapper;
+	private final PasswordEncoder passwordEncoder;
 
 	public UserDto findByUsername(String userName){
 		UserEntity userEntity = userRepository.findByUsername(userName).orElseThrow();
@@ -30,6 +32,9 @@ public class UserService {
 		UserDto user = findByUsername(userName);
 		user.setName(editedUser.getName());
 		user.setSurname(editedUser.getSurname());
+		if(editedUser.getPassword() != null && !editedUser.getPassword().isEmpty()){
+			user.setPassword(passwordEncoder.encode(editedUser.getPassword()));
+		}
 		log.debug(">>> user:{}", user);
 		UserEntity userEntity = userMapper.toEntity(user);
 		log.debug(">>> userEntity:{}", userEntity);

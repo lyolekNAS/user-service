@@ -8,6 +8,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 import lombok.extern.slf4j.Slf4j;
 import org.sav.fornas.userservice.property.RsaKeyProperties;
 import org.sav.fornas.userservice.security.CustomUserDetails;
+import org.sav.fornas.userservice.security.RejectPasswordEncoder;
 import org.sav.fornas.userservice.security.RsaKeyProvider;
 import org.sav.fornas.userservice.service.CustomOidcUserService;
 import org.springframework.context.annotation.Bean;
@@ -135,6 +136,7 @@ public class SecurityConfig {
 				18500,
 				Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256)
 		);
+		encoders.put("reject", new RejectPasswordEncoder());
 
 		return new DelegatingPasswordEncoder(encodingId, encoders);
 	}

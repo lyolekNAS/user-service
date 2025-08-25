@@ -34,6 +34,7 @@ public class CustomOidcUserService implements OAuth2UserService<OidcUserRequest,
 					newUser.setUsername(userEmail);
 					newUser.setName(oidcUser.getAttribute("given_name"));
 					newUser.setSurname(oidcUser.getAttribute("family_name"));
+					newUser.setPassword("{reject}reject");
 
 					log.debug("newUser={}", newUser);
 					return userRepository.save(newUser);
