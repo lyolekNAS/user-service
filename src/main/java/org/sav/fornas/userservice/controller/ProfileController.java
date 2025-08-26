@@ -31,7 +31,7 @@ public class ProfileController {
 
 	@PostMapping("/profile")
 	public String editProfile(@ModelAttribute UserDto userDto, @AuthenticationPrincipal CustomUserDetails cud) {
-		userService.saveUser(userDto, cud.getUsername());
+		userService.saveUserProfile(userDto, cud.getUsername());
 		return "redirect:/profile";
 	}
 }

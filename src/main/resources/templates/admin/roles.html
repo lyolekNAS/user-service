@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Ролі користувача</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <h2 th:text="'Ролі для : ' + ${user.username}"></h2>
+    <form th:action="@{/admin/roles}" th:object="${user}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{username}"/>
+        <!--input type="hidden" th:field="*{email}"/>
+        <input type="hidden" th:field="*{name}"/>
+        <input type="hidden" th:field="*{surname}"/-->
+        
+        <div th:each="role : ${roles}">
+            <label class="checkbox-label">
+                <input type="checkbox" 
+                       th:name="rolesIds"
+                       th:value="${role.id}"
+                       th:checked="${user.roles != null && user.roles.contains(role)}">
+                <span th:text="${role.roleName} + ' ' + ${role.description}"></span>
+            </label>
+        </div>
+        
+        <button type="submit">Save Roles</button>
+    </form>
+</div>
+</body>
+</html>

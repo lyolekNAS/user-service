@@ -137,6 +137,17 @@ button:hover {
     background: #0056b3;
 }
 
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-right: 8px;
+    width: auto;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 10px;
