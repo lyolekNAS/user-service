@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Користувачі</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <h2 th:text="Користувачі"></h2>
+
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Користувач</th>
+            <th>Ім'я</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td>
+                <a th:href="'/admin/roles?id=' + ${user.id}" th:text="${user.username}"></a>
+            </td>
+            <td th:text="${user.name} + ' ' + ${user.surname}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

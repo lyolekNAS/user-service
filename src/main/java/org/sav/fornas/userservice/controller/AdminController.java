@@ -16,9 +16,15 @@ public class AdminController {
 
 	private final UserService userService;
 
+	@GetMapping("/users")
+	public String getUsers(Model model) {
+		model.addAttribute("users", userService.getAllUsers());
+		return "/admin/users";
+	}
+
 	@GetMapping("/roles")
-	public String getUserRoles(Model model, @RequestParam String name) {
-		model.addAttribute("user", userService.findByUsername(name));
+	public String getUserRoles(Model model, @RequestParam Long id) {
+		model.addAttribute("user", userService.findById(id));
 		model.addAttribute("roles", userService.getAllRoles());
 		return "/admin/roles";
 	}
@@ -26,7 +32,6 @@ public class AdminController {
 	@PostMapping("/roles")
 	public String setUserRoles(@ModelAttribute UserDto userDto) {
 		userService.saveUserRoles(userDto);
-		return "redirect:/admin/roles?name=" + userDto.getUsername();
+		return "redirect:/admin/roles?id=" + userDto.getId();
 	}
-
 }

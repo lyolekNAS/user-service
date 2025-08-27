@@ -25,13 +25,13 @@ public class ProfileController {
 
 	@GetMapping("/profile")
 	public String profile(Model model, @AuthenticationPrincipal CustomUserDetails cud) {
-		model.addAttribute("user", userService.findByUsername(cud.getUsername()));
+		model.addAttribute("user", userService.findById(cud.getId()));
 		return "profile";
 	}
 
 	@PostMapping("/profile")
 	public String editProfile(@ModelAttribute UserDto userDto, @AuthenticationPrincipal CustomUserDetails cud) {
-		userService.saveUserProfile(userDto, cud.getUsername());
+		userService.saveUserProfile(userDto, cud.getId());
 		return "redirect:/profile";
 	}
 }

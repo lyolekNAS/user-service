@@ -26,16 +26,23 @@ public class UserService {
 	private final RoleMapper roleMapper;
 	private final PasswordEncoder passwordEncoder;
 
-	public UserDto findByUsername(String userName){
-		UserEntity userEntity = userRepository.findByUsername(userName).orElseThrow();
+	public List<UserDto> getAllUsers(){
+		List<UserEntity> usersEntity = userRepository.findAll();
+		List<UserDto> usersDto = userMapper.toDtoList(usersEntity);
+		log.debug(">>> usersDto:{}", usersDto);
+		return usersDto;
+	}
+
+	public UserDto findById(Long id){
+		UserEntity userEntity = userRepository.findById(id).orElseThrow();
 		UserDto userDto = userMapper.toDto(userEntity);
 		log.debug(">>> userDto:{}", userDto);
 		return userDto;
 	}
 
-	public void saveUserProfile(UserDto editedUser, String userName){
+	public void saveUserProfile(UserDto editedUser, Long id){
 		log.debug(">>> Profile editedUser:{}", editedUser);
-		UserDto user = findByUsername(userName);
+		UserDto user = findById(id);
 		user.setName(editedUser.getName());
 		user.setSurname(editedUser.getSurname());
 		if(editedUser.getPassword() != null && !editedUser.getPassword().isEmpty()){
@@ -46,8 +53,8 @@ public class UserService {
 
 	public void saveUserRoles(UserDto editedUser){
 		log.debug(">>> Roles editedUser:{}", editedUser);
-		UserDto user = findByUsername(editedUser.getUsername());
-		List<RoleEntity> roles = roleRepository.findAllById(editedUser.getRolesIds());
+		UserDto user = findById(editedUser.getId());
+		List<RoleEntity> roles = editedUser.getRolesIds() != null ? roleRepository.findAllById(editedUser.getRolesIds()) : null;
 		user.setRoles((roleMapper.toDtoList(roles)));
 		convertUserToEntityAndSave(user);
 	}
