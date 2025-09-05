@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 public class RsaKeyProperties {
-	private String privatePath;
-	private String publicPath;
+	private String privateKey;
+	private String publicKey;
 	private String keyId;
 }

@@ -2,5 +2,4 @@ spring:
     application:
         name: user-service
     config:
-#        import: ${DB_CONF},${APP_CONF}
-        import: ${CONF_DIR}/${spring.application.name}/config.yaml,${CONF_DIR}/${spring.application.name}/database.yaml
+        import: ${CONF_DIR}/${spring.application.name}/config.yaml,vault://
