@@ -84,6 +84,9 @@ public class SecurityConfig {
 						authorizationServer
 								.oidc(Customizer.withDefaults())
 				)
+				.csrf(csrf -> csrf.ignoringRequestMatchers(
+						authorizationServerConfigurer.getEndpointsMatcher()
+				))
 				.authorizeHttpRequests(authorize ->
 						authorize
 								.anyRequest().authenticated()
