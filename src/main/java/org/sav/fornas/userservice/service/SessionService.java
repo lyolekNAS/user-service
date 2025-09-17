@@ -20,10 +20,10 @@ public class SessionService {
 
 	private final RedisTemplate<String, Object> redisCustomTemplate;
 
-	private final String redisKeyPrefix = "spring:session:sessions:";
+	private static final String REDIS_KEY_PREFIX = "spring:session:sessions:";
 
 	public List<SessionDto> getAllSessions() {
-		Set<String> keys = redisCustomTemplate.keys(redisKeyPrefix + "*");
+		Set<String> keys = redisCustomTemplate.keys(REDIS_KEY_PREFIX + "*");
 		log.debug(">>> keys={}", keys);
 
 		List<SessionDto> sessions = new ArrayList<>();
@@ -37,22 +37,20 @@ public class SessionService {
 
 
 	public SessionDto getSession(String sid){
-		return getSessionByKey(redisKeyPrefix + sid);
+		return getSessionByKey(REDIS_KEY_PREFIX + sid);
 	}
 
 	private SessionDto getSessionByKey(String key){
 		Map<Object, Object> value = redisCustomTemplate.opsForHash().entries(key);
 		Long ttl = redisCustomTemplate.getExpire(key);
 
-		SessionDto sessionDto = new SessionDto(key.replace(redisKeyPrefix, ""));
+		SessionDto sessionDto = new SessionDto(key.replace(REDIS_KEY_PREFIX, ""));
 
 		Object contextAttr = value.get("sessionAttr:SPRING_SECURITY_CONTEXT");
 
 		sessionDto.setUsername("---");
-		if (contextAttr instanceof SecurityContext ctx) {
-			if (ctx.getAuthentication() != null && ctx.getAuthentication().getPrincipal() instanceof CustomUserDetails cud) {
-				sessionDto.setUsername(cud.getUsername());
-			}
+		if (contextAttr instanceof SecurityContext ctx && ctx.getAuthentication() != null && ctx.getAuthentication().getPrincipal() instanceof CustomUserDetails cud) {
+			sessionDto.setUsername(cud.getUsername());
 		}
 
 		sessionDto.setAttributes(value);
@@ -68,7 +66,7 @@ public class SessionService {
 	}
 
 	public void deleteSession(String sessionId) {
-		String key = redisKeyPrefix + sessionId;
+		String key = REDIS_KEY_PREFIX + sessionId;
 		redisCustomTemplate.delete(key);
 		log.info("Deleted session: {}", sessionId);
 	}

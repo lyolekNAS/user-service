@@ -9,9 +9,6 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
-//@Getter
-//@Setter
-//@ToString(exclude = "roles")
 @Data
 public class UserEntity {
 

@@ -1,11 +1,11 @@
 package org.sav.fornas.userservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.sav.fornas.userservice.entity.UserEntity;
 import org.sav.fornas.userservice.repository.UserRepository;
 import org.sav.fornas.userservice.security.CustomUserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -18,12 +18,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CustomOidcUserService implements OAuth2UserService<OidcUserRequest, OidcUser> {
 
-	private final OidcUserService delegate = new OidcUserService();
+	@Setter
+	private OidcUserService oidcUserService = new OidcUserService();
 	private final UserRepository userRepository;
 
 	@Override
 	public OidcUser loadUser(OidcUserRequest request) throws OAuth2AuthenticationException {
-		OidcUser oidcUser = delegate.loadUser(request);
+		OidcUser oidcUser = oidcUserService.loadUser(request);
 		String userEmail = oidcUser.getEmail();
 
 		log.debug("oidcUser={}", oidcUser);

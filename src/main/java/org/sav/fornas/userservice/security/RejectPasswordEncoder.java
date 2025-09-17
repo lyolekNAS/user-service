@@ -2,8 +2,6 @@ package org.sav.fornas.userservice.security;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Objects;
-
 public class RejectPasswordEncoder implements PasswordEncoder {
 	@Override
 	public String encode(CharSequence rawPassword) {
