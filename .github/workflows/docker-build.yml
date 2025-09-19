@@ -4,10 +4,33 @@ on:
   push:
     branches:
       - main
-jobs:
-  build:
-    runs-on: ubuntu-latest
 
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      -   uses: actions/checkout@v4
+
+      -   name: Set up JDK
+          uses: actions/setup-java@v4
+          with:
+            distribution: temurin
+            java-version: 21
+
+      -   name: Run tests
+          run: ./mvnw clean verify -s .mvn/settings.xml
+          env:
+            CONFIG_SERVER_PASS: ${{ secrets.CONFIG_SERVER_PASS }}
+            CONFIG_SERVER_URL: ${{ secrets.CONFIG_SERVER_URL }}
+            CONFIG_SERVER_USER: ${{ secrets.CONFIG_SERVER_USER }}
+            SPRING_PROFILES_ACTIVE: test
+            USER_SERVICE_VAULT_ROLE_ID: ${{ secrets.USER_SERVICE_VAULT_ROLE_ID }}
+            USER_SERVICE_VAULT_SECRET_ID: ${{ secrets.USER_SERVICE_VAULT_SECRET_ID }}
+            GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
