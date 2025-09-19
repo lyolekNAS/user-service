@@ -32,3 +32,5 @@ jobs:
           tags: lyolek.synology.me:5555/nasa/user-service:latest
           secrets: | 
             github_token=${{ secrets.MY_GITHUB_TOKEN }}
+          cache-from: type=gha,scope=maven
+          cache-to: type=gha,scope=maven,mode=max
