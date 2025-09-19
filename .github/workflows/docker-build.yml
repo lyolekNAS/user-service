@@ -30,5 +30,5 @@ jobs:
         with:
           push: true
           tags: lyolek.synology.me:5555/nasa/user-service:latest
-          build-args: |
-            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          secrets: | 
+            github_token=${{ secrets.MY_GITHUB_TOKEN }}
