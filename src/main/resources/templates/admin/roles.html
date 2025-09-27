@@ -21,7 +21,7 @@
                        th:name="rolesIds"
                        th:value="${role.id}"
                        th:checked="${user.roles != null && user.roles.contains(role)}">
-                <span th:text="${role.roleName} + ' ' + ${role.description}"></span>
+                <span th:text="|${role.roleName} ${role.description}|"></span>
             </label>
         </div>
         

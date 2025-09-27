@@ -10,7 +10,7 @@
     <h2>Вітаю, <span sec:authentication="principal.name"></span> <span sec:authentication="principal.surname"></span> (<span sec:authentication="name"></span>)</h2>
 
     <div sec:authorize="hasRole('ROLE_AUTH_ADMIN')">
-        <div><a th:href="@{/password/пароль}">Паролі</a></div>
+        <div><a th:href="@{/api/password/пароль}">Паролі</a></div>
         <div><a th:href="@{/session/all}">Сесії</a></div>
         <div><a th:href="@{/admin/users}">Користувачі</a></div>
     </div>

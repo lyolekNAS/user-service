@@ -19,12 +19,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.id}"></td>
+        <tr th:each="user : ${users}" th:object="${user}">
+            <td th:text="*{id}"></td>
             <td>
-                <a th:href="@{'/admin/roles?id=' + ${user.id}}" th:text="${user.username}"></a>
+                <a th:href="@{/admin/roles(id=*{id})}" th:text="*{username}"></a>
             </td>
-            <td th:text="${user.name} + ' ' + ${user.surname}"></td>
+            <td th:text="|*{name} *{surname}|"></td>
         </tr>
         </tbody>
     </table>
