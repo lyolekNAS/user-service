@@ -32,6 +32,8 @@ class SessionControllerTest {
 
     private CustomUserDetails userDetails;
 
+    private final String appName = "user-service";
+
     @BeforeEach
     void setUp() {
         userDetails = CustomUserDetails.builder()
@@ -44,22 +46,22 @@ class SessionControllerTest {
     @Test
     void getAllSessions_ShouldReturnSessionsView() throws Exception {
         List<SessionDto> sessions = List.of(new SessionDto("1"), new SessionDto("2"));
-        when(sessionService.getAllSessions("user-service")).thenReturn(sessions);
+        when(sessionService.getAllSessions(appName)).thenReturn(sessions);
 
-        mockMvc.perform(get("/session/all").with(user(userDetails)))
+        mockMvc.perform(get("/session/all/" + appName).with(user(userDetails)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/session/all"))
                 .andExpect(model().attribute("sessions", sessions));
 
-        verify(sessionService).getAllSessions("user-service");
+        verify(sessionService).getAllSessions(appName);
     }
 
     @Test
     void deleteSession_ShouldDeleteAndRedirect() throws Exception {
-        mockMvc.perform(get("/session/delete").param("sid", "test-session-id").with(user(userDetails)))
+        mockMvc.perform(get("/session/delete/" + appName).param("sid", "test-session-id").with(user(userDetails)))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/session/all"));
+                .andExpect(redirectedUrl("/session/all/" + appName));
 
-        verify(sessionService).deleteSession("test-session-id", "user-service");
+        verify(sessionService).deleteSession("test-session-id", appName);
     }
 }

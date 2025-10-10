@@ -1,5 +1,6 @@
 package org.sav.fornas.userservice.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@Slf4j
 class SessionServiceTest {
 
     @Mock
@@ -43,7 +45,8 @@ class SessionServiceTest {
     private SessionService sessionService;
 
     private final String sessionId = "test-session-id";
-    private final String redisKey = "spring:session:sessions:" + sessionId;
+    private final String appName = "user-service";
+    private final String redisKey = "spring:session:" + appName + ":" + sessionId;
 
 
     @Test
@@ -52,11 +55,11 @@ class SessionServiceTest {
         Map<Object, Object> sessionData = createSessionData();
 
         when(redisCustomTemplate.opsForHash()).thenReturn(hashOperations);
-        when(redisCustomTemplate.keys("spring:session:sessions:*")).thenReturn(keys);
+        when(redisCustomTemplate.keys("spring:session:user-service:*")).thenReturn(keys);
         when(hashOperations.entries(redisKey)).thenReturn(sessionData);
         when(redisCustomTemplate.getExpire(redisKey)).thenReturn(3600L);
 
-        List<SessionDto> result = sessionService.getAllSessions("user-service");
+        List<SessionDto> result = sessionService.getAllSessions(appName);
 
         assertNotNull(result);
         assertEquals(1, result.size());
@@ -71,7 +74,7 @@ class SessionServiceTest {
         when(hashOperations.entries(redisKey)).thenReturn(sessionData);
         when(redisCustomTemplate.getExpire(redisKey)).thenReturn(3600L);
 
-        SessionDto result = sessionService.getSession(sessionId, "user-service");
+        SessionDto result = sessionService.getSession(sessionId, appName);
 
         assertNotNull(result);
         assertEquals(sessionId, result.getId());
@@ -90,7 +93,7 @@ class SessionServiceTest {
         when(authentication.getPrincipal()).thenReturn(customUserDetails);
         when(customUserDetails.getUsername()).thenReturn("testuser");
 
-        SessionDto result = sessionService.getSession(sessionId, "user-service");
+        SessionDto result = sessionService.getSession(sessionId, appName);
 
         assertNotNull(result);
         assertEquals("testuser", result.getUsername());
@@ -98,7 +101,7 @@ class SessionServiceTest {
 
     @Test
     void deleteSession_ValidSessionId_DeletesSession() {
-        sessionService.deleteSession(sessionId, "user-service");
+        sessionService.deleteSession(sessionId, appName);
 
         verify(redisCustomTemplate).delete(redisKey);
     }

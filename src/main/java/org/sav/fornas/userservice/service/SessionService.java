@@ -20,7 +20,7 @@ public class SessionService {
 
 	private final RedisTemplate<String, Object> redisCustomTemplate;
 
-	private static final String REDIS_KEY_PREFIX = "spring:session:%s";
+	private static final String REDIS_KEY_PREFIX = "spring:session:%s:";
 
 	public List<SessionDto> getAllSessions(String appName) {
 		Set<String> keys = redisCustomTemplate.keys(REDIS_KEY_PREFIX.formatted(appName) + "*");
