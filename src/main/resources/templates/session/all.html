@@ -22,14 +22,14 @@
         <tr th:each="sess, sessStat : ${sessions}" th:object="${sess}">
             <td th:text="${sessStat.count}"></td>
             <td>
-                <a th:href="@{/api/session/view(sid=*{id})}"
+                <a th:href="@{/api/session/view/{app}(app=${appName}, sid=*{id})}"
                    th:text="*{username}">
                 </a>
             </td>
             <td th:text="*{{creationTime}}"></td>
             <td th:text="*{{lastAccessedTime}}"></td>
             <td>
-                <a th:href="@{/session/delete(sid=*{id})}"  th:text="*{ttlFormatted}" style="margin-left: 10px; color: red;"></a>
+                <a th:href="@{/session/delete/{app}(app=${appName}, sid=*{id})}"  th:text="*{ttlFormatted}" style="margin-left: 10px; color: red;"></a>
             </td>
         </tr>
         </tbody>

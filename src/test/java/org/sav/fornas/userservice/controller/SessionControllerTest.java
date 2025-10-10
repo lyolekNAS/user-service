@@ -44,14 +44,14 @@ class SessionControllerTest {
     @Test
     void getAllSessions_ShouldReturnSessionsView() throws Exception {
         List<SessionDto> sessions = List.of(new SessionDto("1"), new SessionDto("2"));
-        when(sessionService.getAllSessions()).thenReturn(sessions);
+        when(sessionService.getAllSessions("user-service")).thenReturn(sessions);
 
         mockMvc.perform(get("/session/all").with(user(userDetails)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/session/all"))
                 .andExpect(model().attribute("sessions", sessions));
 
-        verify(sessionService).getAllSessions();
+        verify(sessionService).getAllSessions("user-service");
     }
 
     @Test
@@ -60,6 +60,6 @@ class SessionControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/session/all"));
 
-        verify(sessionService).deleteSession("test-session-id");
+        verify(sessionService).deleteSession("test-session-id", "user-service");
     }
 }

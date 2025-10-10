@@ -3,10 +3,7 @@ package org.sav.fornas.userservice.controller.rest;
 import lombok.RequiredArgsConstructor;
 import org.sav.fornas.dto.sessions.SessionDto;
 import org.sav.fornas.userservice.service.SessionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,8 +13,8 @@ public class SessionRestController {
 
 	private final SessionService sessionService;
 
-	@GetMapping("/view")
-	public SessionDto getSession(@RequestParam String sid) {
-		return sessionService.getSession(sid);
+	@GetMapping("/view/{appName}")
+	public SessionDto getSession(@RequestParam String sid, @PathVariable String appName) {
+		return sessionService.getSession(sid, appName);
 	}
 }

@@ -5,6 +5,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.sav.fornas.userservice.property.RsaKeyProperties;
 import org.sav.fornas.userservice.security.CustomUserDetails;
@@ -26,15 +27,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
-import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
-import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
@@ -55,7 +53,7 @@ import java.util.Map;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60*60*24*14)
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60*60*24*14, redisNamespace = "spring:session:user-service")
 public class SecurityConfig {
 
 	@Bean
@@ -76,25 +74,9 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-//	@Bean
-//	@Order(1) // Вищий пріоритет, ніж Auth Server та Default
-//	public SecurityFilterChain resourceServerSecurityFilterChain(HttpSecurity http) throws Exception {
-//		// Встановлюємо співставлення тільки для OIDC UserInfo Endpoint
-//		http
-//				.securityMatcher("/userinfo")
-//				.authorizeHttpRequests(authorize -> authorize
-//						.anyRequest().authenticated()
-//				)
-//				// Включаємо підтримку Resource Server для валідації Bearer Token (JWT)
-//				.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-//				.csrf(AbstractHttpConfigurer::disable)
-//				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Важливо: без сесій
-//
-//		return http.build();
-//	}
 
 	@Bean
-	@Order(2)
+	@Order(1)
 	public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
 		OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
 				new OAuth2AuthorizationServerConfigurer();
@@ -124,7 +106,7 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	@Order(3)
+	@Order(2)
 	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, CustomOidcUserService customOidcUserService)
 			throws Exception {
 		http

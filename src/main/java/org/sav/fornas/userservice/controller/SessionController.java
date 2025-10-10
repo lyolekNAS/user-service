@@ -6,6 +6,7 @@ import org.sav.fornas.userservice.service.SessionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
@@ -16,16 +17,17 @@ public class SessionController {
 
 	private final SessionService sessionService;
 
-	@GetMapping("/all")
-	public String getAllSessions(Model model) {
-		model.addAttribute("sessions", sessionService.getAllSessions());
+	@GetMapping("/all/{appName}")
+	public String getAllSessions(@PathVariable String appName, Model model) {
+		model.addAttribute("appName", appName);
+		model.addAttribute("sessions", sessionService.getAllSessions(appName));
 		return "/session/all";
 	}
 
-	@GetMapping("/delete")
-	public String deleteSession(String sid) {
-		sessionService.deleteSession(sid);
-		return "redirect:/session/all";
+	@GetMapping("/delete/{appName}")
+	public String deleteSession(String sid, @PathVariable String appName) {
+		sessionService.deleteSession(sid, appName);
+		return "redirect:/session/all/" + appName;
 	}
 }
 

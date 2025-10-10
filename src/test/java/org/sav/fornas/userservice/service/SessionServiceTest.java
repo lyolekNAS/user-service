@@ -56,7 +56,7 @@ class SessionServiceTest {
         when(hashOperations.entries(redisKey)).thenReturn(sessionData);
         when(redisCustomTemplate.getExpire(redisKey)).thenReturn(3600L);
 
-        List<SessionDto> result = sessionService.getAllSessions();
+        List<SessionDto> result = sessionService.getAllSessions("user-service");
 
         assertNotNull(result);
         assertEquals(1, result.size());
@@ -71,7 +71,7 @@ class SessionServiceTest {
         when(hashOperations.entries(redisKey)).thenReturn(sessionData);
         when(redisCustomTemplate.getExpire(redisKey)).thenReturn(3600L);
 
-        SessionDto result = sessionService.getSession(sessionId);
+        SessionDto result = sessionService.getSession(sessionId, "user-service");
 
         assertNotNull(result);
         assertEquals(sessionId, result.getId());
@@ -90,7 +90,7 @@ class SessionServiceTest {
         when(authentication.getPrincipal()).thenReturn(customUserDetails);
         when(customUserDetails.getUsername()).thenReturn("testuser");
 
-        SessionDto result = sessionService.getSession(sessionId);
+        SessionDto result = sessionService.getSession(sessionId, "user-service");
 
         assertNotNull(result);
         assertEquals("testuser", result.getUsername());
@@ -98,7 +98,7 @@ class SessionServiceTest {
 
     @Test
     void deleteSession_ValidSessionId_DeletesSession() {
-        sessionService.deleteSession(sessionId);
+        sessionService.deleteSession(sessionId, "user-service");
 
         verify(redisCustomTemplate).delete(redisKey);
     }

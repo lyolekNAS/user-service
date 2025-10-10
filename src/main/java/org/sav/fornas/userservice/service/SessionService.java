@@ -20,31 +20,31 @@ public class SessionService {
 
 	private final RedisTemplate<String, Object> redisCustomTemplate;
 
-	private static final String REDIS_KEY_PREFIX = "spring:session:sessions:";
+	private static final String REDIS_KEY_PREFIX = "spring:session:%s";
 
-	public List<SessionDto> getAllSessions() {
-		Set<String> keys = redisCustomTemplate.keys(REDIS_KEY_PREFIX + "*");
+	public List<SessionDto> getAllSessions(String appName) {
+		Set<String> keys = redisCustomTemplate.keys(REDIS_KEY_PREFIX.formatted(appName) + "*");
 		log.debug(">>> keys={}", keys);
 
 		List<SessionDto> sessions = new ArrayList<>();
 
 		for (String key : keys) {
 
-			sessions.add(getSessionByKey(key));
+			sessions.add(getSessionByKey(key, appName));
 		}
 		return sessions;
 	}
 
 
-	public SessionDto getSession(String sid){
-		return getSessionByKey(REDIS_KEY_PREFIX + sid);
+	public SessionDto getSession(String sid, String appName){
+		return getSessionByKey(REDIS_KEY_PREFIX.formatted(appName) + sid, appName);
 	}
 
-	private SessionDto getSessionByKey(String key){
+	private SessionDto getSessionByKey(String key, String appName){
 		Map<Object, Object> value = redisCustomTemplate.opsForHash().entries(key);
 		Long ttl = redisCustomTemplate.getExpire(key);
 
-		SessionDto sessionDto = new SessionDto(key.replace(REDIS_KEY_PREFIX, ""));
+		SessionDto sessionDto = new SessionDto(key.replace(REDIS_KEY_PREFIX.formatted(appName), ""));
 
 		Object contextAttr = value.get("sessionAttr:SPRING_SECURITY_CONTEXT");
 
@@ -65,8 +65,8 @@ public class SessionService {
 		return sessionDto;
 	}
 
-	public void deleteSession(String sessionId) {
-		String key = REDIS_KEY_PREFIX + sessionId;
+	public void deleteSession(String sessionId, String appName) {
+		String key = REDIS_KEY_PREFIX.formatted(appName) + sessionId;
 		redisCustomTemplate.delete(key);
 		log.info("Deleted session: {}", sessionId);
 	}
