@@ -61,7 +61,7 @@ public class SecurityConfig {
 	public SecurityFilterChain publicFilterChain(HttpSecurity http) throws Exception {
 		http
 				.securityMatcher(
-						"/error", "/css/**", "/js/**", "/pub/**"
+						"/error", "/css/**", "/js/**", "/api/pub/**"
 				)
 				.authorizeHttpRequests(authorize -> authorize
 						.anyRequest().permitAll()
