@@ -3,7 +3,7 @@ package org.sav.fornas.userservice.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.sav.fornas.dto.sessions.SessionDto;
+import org.sav.fornas.userservice.dto.sessions.SessionDto;
 import org.sav.fornas.userservice.security.CustomUserDetails;
 import org.sav.fornas.userservice.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;

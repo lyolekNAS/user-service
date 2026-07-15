@@ -3,7 +3,7 @@ package org.sav.fornas.userservice.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.sav.fornas.dto.users.UserDto;
+import org.sav.fornas.userservice.dto.users.UserDto;
 import org.sav.fornas.userservice.security.CustomUserDetails;
 import org.sav.fornas.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

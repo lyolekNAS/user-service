@@ -1,7 +1,7 @@
 package org.sav.fornas.userservice.controller;
 
 import org.junit.jupiter.api.Test;
-import org.sav.fornas.dto.users.UserDto;
+import org.sav.fornas.userservice.dto.users.UserDto;
 import org.sav.fornas.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

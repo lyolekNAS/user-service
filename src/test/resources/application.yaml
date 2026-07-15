@@ -1,0 +1,102 @@
+app-props:
+    rsa-keys:
+        private-key: |
+            -----BEGIN PRIVATE KEY-----
+            MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCZMtrv/AsHcPAL
+            k04DBMoRK+agPsomyju1OlyZKsZw+ITPTnb/fxYU8XLKw5rTiQDZfHBpC4Z6UhIn
+            Ef3dvQuW/W+jBbDVNQHLzMrfigARRip9HNHGPT+zEcgDIF+N4vV1Wo2C05CYVLOt
+            421a8OGTZUL9lzL2ZyhbmKRb1fPDcOmd4WvWMUH9kxZHwsK9XA+qb5mQSH2YP4Ak
+            BVb85+Iqoe/AX5qWE1OMmkk+hhaUA1auQthYWCQXGHDumzrfZKWio/7uxnMZoddA
+            n0pHczx6dvxpyYN3qBeUUaRLbJhA1ifgSIkArsPpk8yF4FW2InaQAS6xnGrDDCVD
+            Y4KdEZDnAgMBAAECggEACFl3tOsBNODIYcZ0/YAg0opt0YpVMoOveQ3wZwlS8xbw
+            XMC+MT2dbVBy0lnn0c3z5bvnqn9OJH4y7r3cdAiDcwa8CLVc27noWlGpNZa2sI+o
+            7X8JGytSZ0bkUPCjlJRBOX9RGsdqEuCm7FFqr9v/XK0BAi41QQMCoD9eUdeu0et7
+            ZM+acitfZpROABkIn9friEoZj2/WNBeIb5kDJBM/mFYImbR5V8L7xzPTQjQ5Blji
+            XxzzfgrmSyOswPtWLNvTATdxgsVhNSxVU8O54/oq4XXnch6zkVhgXQb1DJFxPB+s
+            dQKu5rekr8aedPqGr1jAA17Q9SZb/pogp5eEDbJMqQKBgQDL5EPg+kTWz0asJ6qa
+            EEfYBF1ZvVtGiVbmA82Ns7iSZjqGi5MOjpb70RzMz9jed70NI3uTtjVrwhLmG/fn
+            CugOX/fynHRmvfTzhY+WtqD3PfR1UubXg4zOyNbMbOwBLEdx8QMd/f4O8l9naTbO
+            v4m0W1+yNBdeI80L7g6pbRvRnwKBgQDAWfgwXaB0ElTtBGQIEv5CQ9jyS9UfjhLK
+            eJrhImgEByIYzBTAw0pZRZ5NeSRehYTvzBJ9+7WWZIdoTTPOhK4aHlBydmc3hlEy
+            g9WWm45Y/yZ4zROlXkrfGQF/TgY8isNM05uS7UsC6iNzp4QH9Tc5JfxzQk7X05gS
+            uUoffoLLuQKBgC+XIyTjJahCD0vlolN9k1dfhW6J3UE0k1zy7Eqz9VPumqCG+Zc/
+            Pwyd/avso8Ehj7X+XzzWHdf+H60oQA/kos+gJN6zGBRXKFKjDSXvkNjE1EeCRzFs
+            mjQ1+rUSg2+upyp4R/L7Mw7IEe6wR0Owv3KilU6iDAZEMvsi4Lc5KXIfAoGAJq4w
+            /bDmQlEpaNxYLVN8c+Dm8JqVShos5zBnnNxpZF322lu31Kew/NDGK7gvux5IhFxa
+            X6FNe+fNXwkfYOlHhZMRBGOREBZfn7PpMLcpYfY1S1eaGsgicEi8B1iuYmBZM8rd
+            3yb+zaA97tUB9QO3zjM4WAk+h6JSU3mVUU4EiWkCgYA0tHqxf28n0+tHX7gl+BJf
+            3+qx9unGr1P9waYY4ERg4lWr6eP66UI2tAesSDSVOWxVqgODC4spMVOrmpPpHf3b
+            XpwTbpX6kqdNucM0YE+6K/VKRAv31z+Q3uAdsrXhISje0lmojQ1ud530XMq4L5Um
+            wWTmClXuQex9ZCL2Qzx6Rw==
+            -----END PRIVATE KEY-----
+        public-key: |
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmTLa7/wLB3DwC5NOAwTK
+            ESvmoD7KJso7tTpcmSrGcPiEz052/38WFPFyysOa04kA2XxwaQuGelISJxH93b0L
+            lv1vowWw1TUBy8zK34oAEUYqfRzRxj0/sxHIAyBfjeL1dVqNgtOQmFSzreNtWvDh
+            k2VC/Zcy9mcoW5ikW9Xzw3DpneFr1jFB/ZMWR8LCvVwPqm+ZkEh9mD+AJAVW/Ofi
+            KqHvwF+alhNTjJpJPoYWlANWrkLYWFgkFxhw7ps632SloqP+7sZzGaHXQJ9KR3M8
+            enb8acmDd6gXlFGkS2yYQNYn4EiJAK7D6ZPMheBVtiJ2kAEusZxqwwwlQ2OCnRGQ
+            5wIDAQAB
+        key-id: mega-NAS-id
+
+spring:
+    security:
+        oauth2:
+            client:
+                registration:
+                    google:
+                        client-id: none
+                        client-secret: none
+                        scope: none
+                provider:
+                    google:
+                        user-info-uri: none
+                        authorization-uri: none
+    session:
+        store-type: redis
+        timeout: 336h  # 2 тижні
+    data:
+        redis:
+            host: redis
+            port: 6379
+
+    datasource:
+        url: jdbc:h2:mem:testdb
+    jpa:
+        hibernate.ddl-auto: create-drop
+        show-sql: true
+    config:
+        import:
+            - optional:configserver:${config.server.url}
+    cloud:
+        vault:
+            enabled: false
+
+server:
+    forward-headers-strategy: framework
+    error:
+        whitelabel:
+            enabled: false
+    port: 8050
+    servlet:
+        session:
+            cookie:
+                name: JSESSION_${spring.application.name}
+                same-site: lax
+                secure: true
+                path: /
+                max-age: 1209600   # 14 днів у секундах
+        context-path: /${spring.application.name}
+
+#debug: true
+logging:
+    level:
+        org.sav: TRACE
+        org.springframework.security: TRACE
+        org.springframework.web: TRACE
+        org.springframework.http: TRACE
+        reactor.netty: TRACE
+        io.netty: TRACE
+
+    pattern:
+        console: "%d{yyyy-MM-dd HH:mm:ss}[%-5level][%thread][%logger] - %msg%n"

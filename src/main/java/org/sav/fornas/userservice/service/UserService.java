@@ -2,8 +2,8 @@ package org.sav.fornas.userservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.sav.fornas.dto.users.RoleDto;
-import org.sav.fornas.dto.users.UserDto;
+import org.sav.fornas.userservice.dto.users.RoleDto;
+import org.sav.fornas.userservice.dto.users.UserDto;
 import org.sav.fornas.userservice.entity.RoleEntity;
 import org.sav.fornas.userservice.entity.UserEntity;
 import org.sav.fornas.userservice.mapper.RoleMapper;

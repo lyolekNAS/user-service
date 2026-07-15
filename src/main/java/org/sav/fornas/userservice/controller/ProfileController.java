@@ -1,7 +1,7 @@
 package org.sav.fornas.userservice.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.sav.fornas.dto.users.UserDto;
+import org.sav.fornas.userservice.dto.users.UserDto;
 import org.sav.fornas.userservice.security.CustomUserDetails;
 import org.sav.fornas.userservice.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

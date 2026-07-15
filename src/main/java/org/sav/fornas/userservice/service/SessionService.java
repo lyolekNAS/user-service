@@ -2,7 +2,7 @@ package org.sav.fornas.userservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.sav.fornas.dto.sessions.SessionDto;
+import org.sav.fornas.userservice.dto.sessions.SessionDto;
 import org.sav.fornas.userservice.security.CustomUserDetails;
 import org.sav.fornas.userservice.security.annotation.IsAdmin;
 import org.springframework.data.redis.core.RedisTemplate;

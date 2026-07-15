@@ -1,7 +1,7 @@
 package org.sav.fornas.userservice.controller.rest;
 
 import lombok.RequiredArgsConstructor;
-import org.sav.fornas.dto.sessions.SessionDto;
+import org.sav.fornas.userservice.dto.sessions.SessionDto;
 import org.sav.fornas.userservice.service.SessionService;
 import org.springframework.web.bind.annotation.*;
 

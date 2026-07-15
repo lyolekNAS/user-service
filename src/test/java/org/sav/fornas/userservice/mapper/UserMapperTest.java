@@ -2,7 +2,7 @@ package org.sav.fornas.userservice.mapper;
 
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
-import org.sav.fornas.dto.users.UserDto;
+import org.sav.fornas.userservice.dto.users.UserDto;
 import org.sav.fornas.userservice.entity.UserEntity;
 
 import java.util.List;

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.sav.fornas.dto.sessions.SessionDto;
+import org.sav.fornas.userservice.dto.sessions.SessionDto;
 import org.sav.fornas.userservice.security.CustomUserDetails;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
